@@ -1,5 +1,4 @@
 import * as actionType from "../action/actionTypes";
-import axios from "axios";
 
 export const authStart = () => {
   return {
@@ -29,13 +28,8 @@ export const authLogout = () => {
 };
 
 export const authCheck = () => {
-  return (dispatch) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      dispatch(authLogout());
-    } else {
-      dispatch(authSuccess());
-    }
+  return {
+    type: actionType.CHECK_USER_AUTHORIZED,
   };
 };
 

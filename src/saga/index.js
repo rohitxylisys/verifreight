@@ -1,7 +1,10 @@
-import { takeEvery } from "redux-saga/effects";
+import { takeEvery, all } from "redux-saga/effects";
 import * as actionTypes from "../action/actionTypes";
-import { authUserSaga } from "./auth";
+import { authUserSaga, authCheckSaga } from "./auth";
 
 export function* watchAuth() {
-  yield takeEvery(actionTypes.AUTH_USER, authUserSaga);
+  yield all([
+    takeEvery(actionTypes.AUTH_USER, authUserSaga),
+    takeEvery(actionTypes.CHECK_USER_AUTHORIZED, authCheckSaga),
+  ]);
 }

@@ -4,7 +4,6 @@ import axios from "axios";
 
 export function* authUserSaga(action) {
   yield put(actions.authStart());
-
   try {
     const authData = {
       email: action.email,
@@ -14,12 +13,18 @@ export function* authUserSaga(action) {
       "http://localhost:4000/user/logIn",
       authData
     );
-    console.log(response.data.token);
     yield localStorage.setItem("token", response.data.token);
-    // toast.success(response.data.status);
     yield put(actions.authSuccess(response.data.token, response.data.user.id));
   } catch (error) {
-    console.log(error);
     yield put(actions.authFail(err));
+  }
+}
+
+export function* authCheckSaga() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    yield put(actions.authLogout());
+  } else {
+    yield put(actions.authSuccess());
   }
 }
