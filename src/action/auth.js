@@ -1,6 +1,5 @@
 import * as actionType from "../action/actionTypes";
 import axios from "axios";
-// import { toast } from "react-toastify";
 
 export const authStart = () => {
   return {
@@ -34,32 +33,16 @@ export const authCheck = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       dispatch(authLogout());
-    }else{
+    } else {
       dispatch(authSuccess());
     }
   };
 };
 
 export const auth = (email, password) => {
-  return (dispatch) => {
-    const authData = {
-      email: email,
-      password: password,
-    };
-    axios
-      .post("http://localhost:4000/user/logIn", authData)
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        // toast.success(response.data.status);
-        dispatch(authSuccess(response.data.token, response.data.user.id));
-      })
-      .catch((err) => {
-        alert(err.response.data.error);
-        // toast.error(
-        //   err.response.data ? err.response.data.error : "Something went wrong.!"
-        // );
-        dispatch(authFail(err));
-      });
-    dispatch(authStart());
+  return {
+    type: actionType.AUTH_USER,
+    email: email,
+    password: password,
   };
 };
