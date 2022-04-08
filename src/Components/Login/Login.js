@@ -10,9 +10,7 @@ const Login = () => {
   let loading = useSelector((state) => state.authReducer.loading);
   const dispatch = useDispatch();
   const [passwordShown, setPasswordShown] = useState(false);
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
-  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -20,9 +18,9 @@ const Login = () => {
     dispatch(actions.auth(email, password));
   };
 
-  if (token) {
-    navigate.push("/TodoHome");
-  }
+  // if (token) {
+  //   navigate.push("/TodoHome");
+  // }
   let showSpinner = null;
   if (loading === true) {
     return <div className={styles.spinner}>{/* <SpinnerCircular /> */}</div>;
